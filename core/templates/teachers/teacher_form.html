@@ -1,0 +1,15 @@
+{% extends 'base.hmtl' %}
+
+{% load django_bootstrap5 %}
+
+{% block content %}
+<form action="{% url 'teacher.create' %}" method="post" class="form">
+    {% csrf_token %}
+
+    {% bootstrap_form form %}
+
+    {% bootstrap_button button_type="submit" content="OK" %}
+    {% bootstrap_button button_type="reset" content="Cancel" %}
+</form>
+
+{% endblock %}

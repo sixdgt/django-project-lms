@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
+    <!-- bootstrap css link -->
+
+    <!-- custom css -->
+    {% block custom_css %}{% endblock %}
+</head>
+<body>
+    <!-- navigation -->
+
+    <!-- content -->
+    <main class="container">
+        {% block content %} {% endblock %}
+    </main>
+
+    <!-- footer -->
+    
+    <!-- custom js -->
+    {% block custom_js %} {% endblock %}
+</body>
+</html>
