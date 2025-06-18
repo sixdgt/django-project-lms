@@ -2,11 +2,13 @@
 
 {% block title %} Teacher | List {% endblock %}
 
+{% load django_bootstrap5 %}
+
 {% block content %}
 <section class="container p-5 mt-4">
     <h1>Teacher List</h1>
     <p><a href="{% url 'teacher.create' %}" class="btn btn-sm btn-primary">Add New Teacher</a></p>
-    <table class="table table-hover">
+    <table class="table table-hover border">
         <thead>
             <tr>
                 <th>S.No.</th>
@@ -23,9 +25,9 @@
                 <td>{{ teacher.full_name }}</td>
                 <td>{{ teacher.email }}</td>
                 <td>{{ teacher.phone_no }}</td>
-                <td><a href="#">View</a></td>
-                <td><a href="#">Edit</a></td>
-                <td><a href="#">Delete</a></td>
+                <td><a href="{% url 'teacher.detail' teacher.id %}"><i class="fa-solid fa-eye"></i></a></td>
+                <td><a href="{% url 'teacher.edit' teacher.id %}"><i class="fa-solid fa-pen"></i></a></td>
+                <td><a href="{% url 'teacher.delete' teacher.id %}"><i class="fa-solid fa-trash"></i></a></td>
             </tr>
             {% endfor %}
         </tbody>
