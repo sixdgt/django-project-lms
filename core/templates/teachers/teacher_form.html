@@ -3,13 +3,39 @@
 {% load django_bootstrap5 %}
 
 {% block content %}
-<form action="{% url 'teacher.create' %}" method="post" class="form">
-    {% csrf_token %}
+<section class="container mt-4 mb-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="mb-0">
+                        {% if form.instance.pk %}
+                            <i class="fa-solid fa-edit me-2"></i>Edit Teacher
+                        {% else %}
+                            <i class="fa-solid fa-plus me-2"></i>Add New Teacher
+                        {% endif %}
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <form method="post" class="form">
+                        {% csrf_token %}
 
-    {% bootstrap_form form %}
+                        {% bootstrap_form form %}
 
-    {% bootstrap_button button_type="submit" content="OK" %}
-    {% bootstrap_button button_type="reset" content="Cancel" %}
-</form>
-
+                        <div class="d-flex gap-2">
+                            {% if form.instance.pk %}
+                                {% bootstrap_button button_type="submit" content="Update Teacher" button_class="btn-primary" %}
+                            {% else %}
+                                {% bootstrap_button button_type="submit" content="Create Teacher" button_class="btn-primary" %}
+                            {% endif %}
+                            <a href="{% url 'teacher.index' %}" class="btn btn-secondary">
+                                <i class="fa-solid fa-times me-1"></i>Cancel
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 {% endblock %}

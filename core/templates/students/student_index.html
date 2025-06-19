@@ -1,0 +1,216 @@
+{% extends 'base.html' %}
+
+{% block title %}Students | List{% endblock %}
+
+{% load django_bootstrap5 %}
+
+{% block content %}
+<!-- Breadcrumb Navigation -->
+<nav aria-label="breadcrumb" class="container mt-4 mb-4">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'home' %}"><i class="fa-solid fa-home me-1"></i>Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Students</li>
+    </ol>
+</nav>
+
+<!-- Page Header -->
+<section class="container mb-4">
+    <div class="row align-items-center mb-4">
+        <div class="col-md-6">
+            <h1 class="fw-bold mb-2">
+                <i class="fa-solid fa-user-graduate me-2 text-primary"></i>
+                Student Management
+            </h1>
+            <p class="text-muted mb-0">Manage all student information and academic records</p>
+        </div>
+        <div class="col-md-6 text-md-end">
+            <a href="{% url 'student.create' %}" class="btn btn-primary">
+                <i class="fa-solid fa-plus me-2"></i>Add New Student
+            </a>
+        </div>
+    </div>
+
+    <!-- Statistics Cards -->
+    <div class="row mb-4">
+        <div class="col-lg-3 col-md-6 mb-3">
+            <div class="card bg-primary text-white">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h4 class="fw-bold mb-0">{{ students.count }}</h4>
+                            <small>Total Students</small>
+                        </div>
+                        <i class="fa-solid fa-user-graduate" style="font-size: 2rem; opacity: 0.7;"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6 mb-3">
+            <div class="card bg-success text-white">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h4 class="fw-bold mb-0">0</h4>
+                            <small>Active Students</small>
+                        </div>
+                        <i class="fa-solid fa-check-circle" style="font-size: 2rem; opacity: 0.7;"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6 mb-3">
+            <div class="card bg-warning text-white">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h4 class="fw-bold mb-0">0</h4>
+                            <small>Pending Assignments</small>
+                        </div>
+                        <i class="fa-solid fa-clock" style="font-size: 2rem; opacity: 0.7;"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6 mb-3">
+            <div class="card bg-info text-white">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h4 class="fw-bold mb-0">0</h4>
+                            <small>Completed Courses</small>
+                        </div>
+                        <i class="fa-solid fa-graduation-cap" style="font-size: 2rem; opacity: 0.7;"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Students Table -->
+    <div class="card shadow-sm">
+        <div class="card-header bg-light">
+            <h5 class="mb-0">
+                <i class="fa-solid fa-list me-2 text-primary"></i>
+                All Students
+            </h5>
+        </div>
+        <div class="card-body p-0">
+            {% if students %}
+            <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                    <thead>
+                        <tr>
+                            <th class="px-3">S.No.</th>
+                            <th>Full Name</th>
+                            <th>Email</th>
+                            <th>Semester</th>
+                            <th>Contact</th>
+                            <th class="text-center">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for student in students %}
+                        <tr>
+                            <td class="px-3">{{ forloop.counter }}</td>
+                            <td>
+                                <div class="d-flex align-items-center">
+                                    <div class="bg-primary bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 40px; height: 40px;">
+                                        <i class="fa-solid fa-user text-primary"></i>
+                                    </div>
+                                    <div>
+                                        <strong>{{ student.full_name }}</strong>
+                                        <br>
+                                        <small class="text-muted">ID: #{{ student.id }}</small>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <a href="mailto:{{ student.email }}" class="text-decoration-none">
+                                    {{ student.email }}
+                                </a>
+                            </td>
+                            <td>
+                                <span class="badge bg-info">{{ student.get_semester_display }}</span>
+                            </td>
+                            <td>
+                                <a href="tel:{{ student.phone_no }}" class="text-decoration-none">
+                                    {{ student.phone_no }}
+                                </a>
+                            </td>
+                            <td class="text-center">
+                                <div class="btn-group" role="group">
+                                    <a href="{% url 'student.detail' student.id %}" class="btn btn-sm btn-outline-primary" title="View Details">
+                                        <i class="fa-solid fa-eye"></i>
+                                    </a>
+                                    <a href="{% url 'student.edit' student.id %}" class="btn btn-sm btn-outline-warning" title="Edit">
+                                        <i class="fa-solid fa-pen"></i>
+                                    </a>
+                                    <a href="{% url 'student.delete' student.id %}" class="btn btn-sm btn-outline-danger" title="Delete">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <div class="text-center py-5">
+                <i class="fa-solid fa-user-graduate mb-3" style="font-size: 4rem; opacity: 0.3; color: var(--primary-color);"></i>
+                <h5 class="text-muted">No Students Found</h5>
+                <p class="text-muted mb-4">Start by adding your first student to the system.</p>
+                <a href="{% url 'student.create' %}" class="btn btn-primary">
+                    <i class="fa-solid fa-plus me-2"></i>Add First Student
+                </a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Pagination -->
+    {% if is_paginated %}
+    <nav aria-label="Student pagination" class="mt-4">
+        <ul class="pagination justify-content-center">
+            {% if page_obj.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page=1">
+                        <i class="fa-solid fa-angle-double-left"></i>
+                    </a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}">
+                        <i class="fa-solid fa-angle-left"></i>
+                    </a>
+                </li>
+            {% endif %}
+
+            {% for num in page_obj.paginator.page_range %}
+                {% if page_obj.number == num %}
+                    <li class="page-item active">
+                        <span class="page-link">{{ num }}</span>
+                    </li>
+                {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                    </li>
+                {% endif %}
+            {% endfor %}
+
+            {% if page_obj.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.next_page_number }}">
+                        <i class="fa-solid fa-angle-right"></i>
+                    </a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">
+                        <i class="fa-solid fa-angle-double-right"></i>
+                    </a>
+                </li>
+            {% endif %}
+        </ul>
+    </nav>
+    {% endif %}
+</section>
+{% endblock %}

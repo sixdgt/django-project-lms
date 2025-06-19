@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}Delete Teacher | Confirmation{% endblock %}
+{% block title %}Delete Student | Confirmation{% endblock %}
 
 {% load django_bootstrap5 %}
 
@@ -16,15 +16,15 @@
                     </h4>
                 </div>
                 <div class="card-body">
-                    <h5 class="card-title text-danger">Are you sure you want to delete this teacher?</h5>
+                    <h5 class="card-title text-danger">Are you sure you want to delete this student?</h5>
                     
                     <div class="alert alert-warning">
-                        <strong>Teacher Details:</strong>
+                        <strong>Student Details:</strong>
                         <ul class="list-unstyled mt-2 mb-0">
-                            <li><strong>Name:</strong> {{ teacher.full_name }}</li>
-                            <li><strong>Email:</strong> {{ teacher.email }}</li>
-                            <li><strong>Department:</strong> {{ teacher.get_department_display }}</li>
-                            <li><strong>Phone:</strong> {{ teacher.phone_no }}</li>
+                            <li><strong>Name:</strong> {{ student.full_name }}</li>
+                            <li><strong>Email:</strong> {{ student.email }}</li>
+                            <li><strong>Semester:</strong> {{ student.get_semester_display }}</li>
+                            <li><strong>Phone:</strong> {{ student.phone_no }}</li>
                         </ul>
                     </div>
                     
@@ -39,9 +39,9 @@
                         <div class="d-flex gap-2">
                             <button type="submit" class="btn btn-danger">
                                 <i class="fa-solid fa-trash me-1"></i>
-                                Yes, Delete Teacher
+                                Yes, Delete Student
                             </button>
-                            <a href="{% url 'teacher.index' %}" class="btn btn-secondary">
+                            <a href="{% url 'student.index' %}" class="btn btn-secondary">
                                 <i class="fa-solid fa-times me-1"></i>
                                 Cancel
                             </a>
@@ -52,4 +52,4 @@
         </div>
     </div>
 </section>
-{% endblock %}
+{% endblock %} 

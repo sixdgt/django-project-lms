@@ -1,45 +1,45 @@
 {% extends 'base.html' %}
 
-{% block title %}{{ teacher.full_name }} - Teacher Details{% endblock %}
+{% block title %}{{ student.full_name }} - Student Details{% endblock %}
 
 {% block content %}
 <!-- Breadcrumb Navigation -->
 <nav aria-label="breadcrumb" class="container mt-4 mb-4">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{% url 'home' %}"><i class="fa-solid fa-home me-1"></i>Home</a></li>
-        <li class="breadcrumb-item"><a href="{% url 'teacher.index' %}"><i class="fa-solid fa-chalkboard-teacher me-1"></i>Teachers</a></li>
-        <li class="breadcrumb-item active" aria-current="page">{{ teacher.full_name }}</li>
+        <li class="breadcrumb-item"><a href="{% url 'student.index' %}"><i class="fa-solid fa-user-graduate me-1"></i>Students</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{ student.full_name }}</li>
     </ol>
 </nav>
 
-<!-- Teacher Profile Header -->
-<section class="teacher-profile-header bg-primary text-white py-5 mb-4">
+<!-- Student Profile Header -->
+<section class="student-profile-header bg-success text-white py-5 mb-4">
     <div class="container">
         <div class="row align-items-center">
             <div class="col-lg-8">
                 <div class="d-flex align-items-center mb-3">
                     <div class="bg-white bg-opacity-25 rounded-circle d-flex align-items-center justify-content-center me-4" style="width: 100px; height: 100px;">
-                        <i class="fa-solid fa-user-tie text-white" style="font-size: 3rem;"></i>
+                        <i class="fa-solid fa-user-graduate text-white" style="font-size: 3rem;"></i>
                     </div>
                     <div>
-                        <h1 class="display-5 fw-bold mb-2">{{ teacher.full_name }}</h1>
+                        <h1 class="display-5 fw-bold mb-2">{{ student.full_name }}</h1>
                         <p class="lead mb-1">
-                            <i class="fa-solid fa-building me-2"></i>
-                            {{ teacher.get_department_display }}
+                            <i class="fa-solid fa-graduation-cap me-2"></i>
+                            {{ student.get_semester_display }}
                         </p>
                         <p class="mb-0">
-                            <i class="fa-solid fa-calendar-alt me-2"></i>
-                            Joined: {{ teacher.join_date|date:"F j, Y" }}
+                            <i class="fa-solid fa-id-card me-2"></i>
+                            Student ID: #{{ student.id }}
                         </p>
                     </div>
                 </div>
             </div>
             <div class="col-lg-4 text-lg-end">
                 <div class="d-flex gap-2 justify-content-lg-end">
-                    <a href="{% url 'teacher.edit' teacher.id %}" class="btn btn-light">
+                    <a href="{% url 'student.edit' student.id %}" class="btn btn-light">
                         <i class="fa-solid fa-edit me-2"></i>Edit Profile
                     </a>
-                    <a href="{% url 'teacher.delete' teacher.id %}" class="btn btn-outline-light">
+                    <a href="{% url 'student.delete' student.id %}" class="btn btn-outline-light">
                         <i class="fa-solid fa-trash me-2"></i>Delete
                     </a>
                 </div>
@@ -48,7 +48,7 @@
     </div>
 </section>
 
-<!-- Teacher Information -->
+<!-- Student Information -->
 <section class="container">
     <div class="row">
         <!-- Main Information Card -->
@@ -56,7 +56,7 @@
             <div class="card shadow-sm">
                 <div class="card-header bg-light">
                     <h5 class="mb-0">
-                        <i class="fa-solid fa-info-circle me-2 text-primary"></i>
+                        <i class="fa-solid fa-info-circle me-2 text-success"></i>
                         Personal Information
                     </h5>
                 </div>
@@ -64,24 +64,24 @@
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <div class="d-flex align-items-center">
-                                <div class="bg-primary bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 50px; height: 50px;">
-                                    <i class="fa-solid fa-user text-primary"></i>
+                                <div class="bg-success bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 50px; height: 50px;">
+                                    <i class="fa-solid fa-user text-success"></i>
                                 </div>
                                 <div>
                                     <small class="text-muted d-block">Full Name</small>
-                                    <strong>{{ teacher.full_name }}</strong>
+                                    <strong>{{ student.full_name }}</strong>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-6 mb-3">
                             <div class="d-flex align-items-center">
-                                <div class="bg-success bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 50px; height: 50px;">
-                                    <i class="fa-solid fa-envelope text-success"></i>
+                                <div class="bg-primary bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 50px; height: 50px;">
+                                    <i class="fa-solid fa-envelope text-primary"></i>
                                 </div>
                                 <div>
                                     <small class="text-muted d-block">Email Address</small>
                                     <strong>
-                                        <a href="mailto:{{ teacher.email }}" class="text-decoration-none">{{ teacher.email }}</a>
+                                        <a href="mailto:{{ student.email }}" class="text-decoration-none">{{ student.email }}</a>
                                     </strong>
                                 </div>
                             </div>
@@ -94,7 +94,7 @@
                                 <div>
                                     <small class="text-muted d-block">Phone Number</small>
                                     <strong>
-                                        <a href="tel:{{ teacher.phone_no }}" class="text-decoration-none">{{ teacher.phone_no }}</a>
+                                        <a href="tel:{{ student.phone_no }}" class="text-decoration-none">{{ student.phone_no }}</a>
                                     </strong>
                                 </div>
                             </div>
@@ -102,33 +102,33 @@
                         <div class="col-md-6 mb-3">
                             <div class="d-flex align-items-center">
                                 <div class="bg-info bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 50px; height: 50px;">
-                                    <i class="fa-solid fa-building text-info"></i>
+                                    <i class="fa-solid fa-graduation-cap text-info"></i>
                                 </div>
                                 <div>
-                                    <small class="text-muted d-block">Department</small>
-                                    <strong>{{ teacher.get_department_display }}</strong>
+                                    <small class="text-muted d-block">Current Semester</small>
+                                    <strong>{{ student.get_semester_display }}</strong>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-6 mb-3">
                             <div class="d-flex align-items-center">
                                 <div class="bg-secondary bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 50px; height: 50px;">
-                                    <i class="fa-solid fa-calendar-alt text-secondary"></i>
+                                    <i class="fa-solid fa-id-card text-secondary"></i>
                                 </div>
                                 <div>
-                                    <small class="text-muted d-block">Join Date</small>
-                                    <strong>{{ teacher.join_date|date:"F j, Y" }}</strong>
+                                    <small class="text-muted d-block">Student ID</small>
+                                    <strong>#{{ student.id }}</strong>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-6 mb-3">
                             <div class="d-flex align-items-center">
                                 <div class="bg-danger bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 50px; height: 50px;">
-                                    <i class="fa-solid fa-id-card text-danger"></i>
+                                    <i class="fa-solid fa-user-circle text-danger"></i>
                                 </div>
                                 <div>
-                                    <small class="text-muted d-block">Teacher ID</small>
-                                    <strong>#{{ teacher.id }}</strong>
+                                    <small class="text-muted d-block">User Account</small>
+                                    <strong>{{ student.user.username }}</strong>
                                 </div>
                             </div>
                         </div>
@@ -140,31 +140,31 @@
             <div class="card shadow-sm mt-4">
                 <div class="card-header bg-light">
                     <h5 class="mb-0">
-                        <i class="fa-solid fa-chart-bar me-2 text-primary"></i>
+                        <i class="fa-solid fa-chart-bar me-2 text-success"></i>
                         Academic Statistics
                     </h5>
                 </div>
                 <div class="card-body">
                     <div class="row text-center">
                         <div class="col-md-4 mb-3">
-                            <div class="bg-primary bg-opacity-10 rounded p-3">
-                                <i class="fa-solid fa-file-alt text-primary mb-2" style="font-size: 2rem;"></i>
-                                <h4 class="fw-bold text-primary">0</h4>
+                            <div class="bg-success bg-opacity-10 rounded p-3">
+                                <i class="fa-solid fa-file-alt text-success mb-2" style="font-size: 2rem;"></i>
+                                <h4 class="fw-bold text-success">0</h4>
                                 <p class="text-muted mb-0">Assignments</p>
                             </div>
                         </div>
                         <div class="col-md-4 mb-3">
-                            <div class="bg-success bg-opacity-10 rounded p-3">
-                                <i class="fa-solid fa-book text-success mb-2" style="font-size: 2rem;"></i>
-                                <h4 class="fw-bold text-success">0</h4>
+                            <div class="bg-primary bg-opacity-10 rounded p-3">
+                                <i class="fa-solid fa-book text-primary mb-2" style="font-size: 2rem;"></i>
+                                <h4 class="fw-bold text-primary">0</h4>
                                 <p class="text-muted mb-0">Materials</p>
                             </div>
                         </div>
                         <div class="col-md-4 mb-3">
                             <div class="bg-warning bg-opacity-10 rounded p-3">
-                                <i class="fa-solid fa-users text-warning mb-2" style="font-size: 2rem;"></i>
+                                <i class="fa-solid fa-clock text-warning mb-2" style="font-size: 2rem;"></i>
                                 <h4 class="fw-bold text-warning">0</h4>
-                                <p class="text-muted mb-0">Students</p>
+                                <p class="text-muted mb-0">Pending</p>
                             </div>
                         </div>
                     </div>
@@ -178,23 +178,23 @@
             <div class="card shadow-sm mb-4">
                 <div class="card-header bg-light">
                     <h6 class="mb-0">
-                        <i class="fa-solid fa-bolt me-2 text-primary"></i>
+                        <i class="fa-solid fa-bolt me-2 text-success"></i>
                         Quick Actions
                     </h6>
                 </div>
                 <div class="card-body">
                     <div class="d-grid gap-2">
-                        <a href="{% url 'teacher.edit' teacher.id %}" class="btn btn-outline-primary">
+                        <a href="{% url 'student.edit' student.id %}" class="btn btn-outline-success">
                             <i class="fa-solid fa-edit me-2"></i>Edit Profile
                         </a>
-                        <a href="#" class="btn btn-outline-success">
-                            <i class="fa-solid fa-file-alt me-2"></i>Create Assignment
+                        <a href="#" class="btn btn-outline-primary">
+                            <i class="fa-solid fa-file-alt me-2"></i>View Assignments
                         </a>
                         <a href="#" class="btn btn-outline-info">
-                            <i class="fa-solid fa-book me-2"></i>Upload Material
+                            <i class="fa-solid fa-book me-2"></i>View Materials
                         </a>
-                        <a href="{% url 'teacher.delete' teacher.id %}" class="btn btn-outline-danger">
-                            <i class="fa-solid fa-trash me-2"></i>Delete Teacher
+                        <a href="{% url 'student.delete' student.id %}" class="btn btn-outline-danger">
+                            <i class="fa-solid fa-trash me-2"></i>Delete Student
                         </a>
                     </div>
                 </div>
@@ -204,27 +204,27 @@
             <div class="card shadow-sm mb-4">
                 <div class="card-header bg-light">
                     <h6 class="mb-0">
-                        <i class="fa-solid fa-address-book me-2 text-primary"></i>
+                        <i class="fa-solid fa-address-book me-2 text-success"></i>
                         Contact Information
                     </h6>
                 </div>
                 <div class="card-body">
                     <div class="mb-3">
                         <small class="text-muted d-block">Email</small>
-                        <a href="mailto:{{ teacher.email }}" class="text-decoration-none">
-                            <i class="fa-solid fa-envelope me-2 text-primary"></i>{{ teacher.email }}
+                        <a href="mailto:{{ student.email }}" class="text-decoration-none">
+                            <i class="fa-solid fa-envelope me-2 text-primary"></i>{{ student.email }}
                         </a>
                     </div>
                     <div class="mb-3">
                         <small class="text-muted d-block">Phone</small>
-                        <a href="tel:{{ teacher.phone_no }}" class="text-decoration-none">
-                            <i class="fa-solid fa-phone me-2 text-success"></i>{{ teacher.phone_no }}
+                        <a href="tel:{{ student.phone_no }}" class="text-decoration-none">
+                            <i class="fa-solid fa-phone me-2 text-success"></i>{{ student.phone_no }}
                         </a>
                     </div>
                     <div>
-                        <small class="text-muted d-block">Department</small>
+                        <small class="text-muted d-block">Semester</small>
                         <span>
-                            <i class="fa-solid fa-building me-2 text-info"></i>{{ teacher.get_department_display }}
+                            <i class="fa-solid fa-graduation-cap me-2 text-info"></i>{{ student.get_semester_display }}
                         </span>
                     </div>
                 </div>
@@ -234,7 +234,7 @@
             <div class="card shadow-sm">
                 <div class="card-header bg-light">
                     <h6 class="mb-0">
-                        <i class="fa-solid fa-clock me-2 text-primary"></i>
+                        <i class="fa-solid fa-clock me-2 text-success"></i>
                         Recent Activity
                     </h6>
                 </div>
@@ -254,18 +254,18 @@
             <div class="card shadow-sm">
                 <div class="card-header bg-light d-flex justify-content-between align-items-center">
                     <h5 class="mb-0">
-                        <i class="fa-solid fa-file-alt me-2 text-primary"></i>
+                        <i class="fa-solid fa-file-alt me-2 text-success"></i>
                         Recent Assignments
                     </h5>
-                    <a href="#" class="btn btn-primary btn-sm">
-                        <i class="fa-solid fa-plus me-2"></i>Create Assignment
+                    <a href="#" class="btn btn-success btn-sm">
+                        <i class="fa-solid fa-plus me-2"></i>View All
                     </a>
                 </div>
                 <div class="card-body">
                     <div class="text-center text-muted py-5">
                         <i class="fa-solid fa-file-alt mb-3" style="font-size: 3rem; opacity: 0.3;"></i>
-                        <h6>No assignments created yet</h6>
-                        <p class="mb-0">This teacher hasn't created any assignments yet.</p>
+                        <h6>No assignments assigned yet</h6>
+                        <p class="mb-0">This student hasn't been assigned any assignments yet.</p>
                     </div>
                 </div>
             </div>
@@ -278,18 +278,18 @@
             <div class="card shadow-sm">
                 <div class="card-header bg-light d-flex justify-content-between align-items-center">
                     <h5 class="mb-0">
-                        <i class="fa-solid fa-book me-2 text-primary"></i>
+                        <i class="fa-solid fa-book me-2 text-success"></i>
                         Recent Learning Materials
                     </h5>
-                    <a href="#" class="btn btn-primary btn-sm">
-                        <i class="fa-solid fa-plus me-2"></i>Upload Material
+                    <a href="#" class="btn btn-success btn-sm">
+                        <i class="fa-solid fa-plus me-2"></i>View All
                     </a>
                 </div>
                 <div class="card-body">
                     <div class="text-center text-muted py-5">
                         <i class="fa-solid fa-book mb-3" style="font-size: 3rem; opacity: 0.3;"></i>
-                        <h6>No materials uploaded yet</h6>
-                        <p class="mb-0">This teacher hasn't uploaded any learning materials yet.</p>
+                        <h6>No materials available yet</h6>
+                        <p class="mb-0">No learning materials have been uploaded for this student's courses yet.</p>
                     </div>
                 </div>
             </div>
@@ -300,17 +300,17 @@
 <!-- Back to List Button -->
 <section class="container mt-4 mb-5">
     <div class="d-flex justify-content-between align-items-center">
-        <a href="{% url 'teacher.index' %}" class="btn btn-outline-secondary">
-            <i class="fa-solid fa-arrow-left me-2"></i>Back to Teachers List
+        <a href="{% url 'student.index' %}" class="btn btn-outline-secondary">
+            <i class="fa-solid fa-arrow-left me-2"></i>Back to Students List
         </a>
         <div class="d-flex gap-2">
-            <a href="{% url 'teacher.edit' teacher.id %}" class="btn btn-primary">
-                <i class="fa-solid fa-edit me-2"></i>Edit Teacher
+            <a href="{% url 'student.edit' student.id %}" class="btn btn-success">
+                <i class="fa-solid fa-edit me-2"></i>Edit Student
             </a>
-            <a href="{% url 'teacher.delete' teacher.id %}" class="btn btn-danger">
-                <i class="fa-solid fa-trash me-2"></i>Delete Teacher
+            <a href="{% url 'student.delete' student.id %}" class="btn btn-danger">
+                <i class="fa-solid fa-trash me-2"></i>Delete Student
             </a>
         </div>
     </div>
 </section>
-{% endblock %}
+{% endblock %} 
