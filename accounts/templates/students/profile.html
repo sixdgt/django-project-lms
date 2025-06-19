@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}Profile{% endblock %}
+
+{% block content %}
+<section class="container">
+    {% if user.is_authenticated %} 
+        <h1>Welcome {{ user.username }}</h1>
+        <p>Name: {{ user.first_name }} {{ user.last_name }}</p>
+        <P>Email: {{ user.email }}</P>
+    {% else %}
+        <h1>Please login to view your profile</h1>
+    {% endif %}
+</section>
+{% endblock%}
