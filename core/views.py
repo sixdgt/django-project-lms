@@ -4,7 +4,7 @@ from django.views.generic.base import TemplateView
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
 from core.models import Teacher, Student, Assignment, Material
 from django.urls import reverse_lazy
-from core.forms import TeacherForm
+from core.forms import TeacherForm, AssignmentForm
 from django.contrib.auth.mixins import LoginRequiredMixin # this package is for class based views
 # from django.contrib.auth.decorators import login_required - this package is for function based views
 
@@ -84,8 +84,30 @@ class AssignmentListView(LoginRequiredMixin, ListView):
     context_object_name = 'assignments'
     paginate_by = 5
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['assignments'] = context['page_obj']  # Now 'teachers' is the Page object
+        return context
+
 class AssignmentCreateView(LoginRequiredMixin, CreateView):
     model = Assignment
-    fields = ['title', 'start_date', 'end_date', 'full_mark', 'assignment_subject']
+    form_class = AssignmentForm
     template_name = 'assignments/assignment_form.html'
+    success_url = reverse_lazy('assignment.index')
+
+class AssignmentDetailView(LoginRequiredMixin, DetailView):
+    model = Assignment
+    template_name = 'assignments/assignment_detail.html'
+    context_object_name = 'teacher'
+
+class AssignmentUpdateView(LoginRequiredMixin, UpdateView):
+    model = Assignment
+    form_class = AssignmentForm
+    template_name = 'assignments/assignment_form.html'
+    success_url = reverse_lazy('assignment.index')
+
+class AssignmentDeleteView(LoginRequiredMixin, DeleteView):
+    model = Assignment
+    context_object_name = 'assignment'
+    template_name = 'assignments/assignment_delete_confirm.html'
     success_url = reverse_lazy('assignment.index')
