@@ -1,0 +1,222 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Assignment List
+{% endblock %}
+
+{% block content %}
+<!-- Breadcrumb Navigation -->
+<nav aria-label="breadcrumb" class="container mt-4 mb-4">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'home' %}"><i class="fa-solid fa-home me-1"></i>Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Assignments</li>
+    </ol>
+</nav>
+<section class="container mb-4">
+    <div class="row align-items-center mb-4">
+        <div class="col-md-6">
+            <h1 class="fw-bold mb-2">
+                <i class="fa-solid fa-chalkboard-teacher me-2 text-primary"></i>
+                Assignment Management
+            </h1>
+            <p class="text-muted mb-0">Manage all assignment information and records</p>
+        </div>
+        <div class="col-md-6 text-md-end">
+            <a href="{% url 'assignment.create' %}" class="btn btn-primary">
+                <i class="fa-solid fa-plus me-2"></i>Add New Assignment
+            </a>
+        </div>
+    </div>
+
+    <!-- Statistics Cards -->
+    <div class="row mb-4">
+        <div class="col-lg-3 col-md-6 mb-3">
+            <div class="card bg-primary text-white">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h4 class="fw-bold mb-0">{{ assignemnts.paginator.count }}</h4>
+                            <small>Total Assignments</small>
+                        </div>
+                        <i class="fa-solid fa-clipboard-list" style="font-size: 2rem; opacity: 0.7;"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6 mb-3">
+            <div class="card bg-success text-white">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h4 class="fw-bold mb-0">0</h4>
+                            <small>Active Assignments</small>
+                        </div>
+                        <i class="fa-solid fa-check-circle" style="font-size: 2rem; opacity: 0.7;"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6 mb-3">
+            <div class="card bg-warning text-white">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h4 class="fw-bold mb-0">0</h4>
+                            <small>Assignments</small>
+                        </div>
+                        <i class="fa-solid fa-file-alt" style="font-size: 2rem; opacity: 0.7;"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6 mb-3">
+            <div class="card bg-info text-white">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h4 class="fw-bold mb-0">0</h4>
+                            <small>Materials</small>
+                        </div>
+                        <i class="fa-solid fa-book" style="font-size: 2rem; opacity: 0.7;"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Teachers Table -->
+    <div class="card shadow-sm">
+        <div class="card-header bg-light">
+            <h5 class="mb-0">
+                <i class="fa-solid fa-list me-2 text-primary"></i>
+                All Assignments
+            </h5>
+        </div>
+        <div class="card-body p-0">
+            {% if assignemts %}
+            <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                    <thead>
+                        <tr>
+                            <th class="px-3">S.No.</th>
+                            <th>Title</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                            <th>Full Mark</th>
+                            <th>Subject</th>
+                            <th class="text-center">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for assignment in assignments %}
+                        <tr>
+                            <td class="px-3">{{ forloop.counter0|add:assignments.start_index }}</td>
+                            <td>
+                                <div class="d-flex align-items-center">
+                                    <div class="bg-primary bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 40px; height: 40px;">
+                                        <i class="fa-solid fa-user-tie text-primary"></i>
+                                    </div>
+                                    <div>
+                                        <strong>{{ assignment.title }}</strong>
+                                        <br>
+                                        <small class="text-muted">ID: #{{ assignment.id }}</small>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <a href="date:{{ assignment.start_date }}" class="text-decoration-none">
+                                    {{ assignment.start_date }}
+                                </a>
+                            </td>
+                            <td>
+                                <a href="date:{{ assignment.end_date }}" class="text-decoration-none">
+                                    {{ assignment.end_date }}
+                                </a>
+                            </td>
+                            <td>
+                                <a href="number:{{ assignment.full_mark }}" class="text-decoration-none">
+                                    {{ assignment.full_mark }}
+                                </a>
+                            </td>
+                            <td>
+                                <a href="#" class="text-decoration-none">
+                                    {{ assignment.assignment_subject }}
+                                </a>
+                            </td>
+                            <td class="text-center">
+                                <div class="btn-group" role="group">
+                                    <a href="{% url 'assignment.detail' assignment.id %}" class="btn btn-sm btn-outline-primary" title="View Details">
+                                        <i class="fa-solid fa-eye"></i>
+                                    </a>
+                                    <a href="{% url 'assignment.edit' assignment.id %}" class="btn btn-sm btn-outline-warning" title="Edit">
+                                        <i class="fa-solid fa-pen"></i>
+                                    </a>
+                                    <a href="{% url 'assignment.delete' assignment.id %}" class="btn btn-sm btn-outline-danger" title="Delete">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <div class="text-center py-5">
+                <i class="fa-solid fa-clipboard-list mb-3" style="font-size: 4rem; opacity: 0.3; color: var(--primary-color);"></i>
+                <h5 class="text-muted">No Assignments Found</h5>
+                <p class="text-muted mb-4">Start by adding your first assignment to the system.</p>
+                <a href="{% url 'assignment.create' %}" class="btn btn-primary">
+                    <i class="fa-solid fa-plus me-2"></i>Add First Assignment
+                </a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Pagination -->
+    {% if is_paginated %}
+    <nav aria-label="Assignment pagination" class="mt-4">
+        <ul class="pagination justify-content-center">
+            {% if assignemnts.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page=1">
+                        <i class="fa-solid fa-angle-double-left"></i>
+                    </a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ assignemnts.previous_page_number }}">
+                        <i class="fa-solid fa-angle-left"></i>
+                    </a>
+                </li>
+            {% endif %}
+
+            {% for num in assignemnts.paginator.page_range %}
+                {% if assignemnts.number == num %}
+                    <li class="page-item active">
+                        <span class="page-link">{{ num }}</span>
+                    </li>
+                {% elif num > assignemnts.number|add:'-3' and num < assignemnts.number|add:'3' %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                    </li>
+                {% endif %}
+            {% endfor %}
+
+            {% if assignemnts.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ assignemnts.next_page_number }}">
+                        <i class="fa-solid fa-angle-right"></i>
+                    </a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ assignemnts.paginator.num_pages }}">
+                        <i class="fa-solid fa-angle-double-right"></i>
+                    </a>
+                </li>
+            {% endif %}
+        </ul>
+    </nav>
+    {% endif %}
+</section>
+{% endblock %}

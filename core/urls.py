@@ -10,7 +10,9 @@ from core.views import (
    StudentListView,
    StudentDetailView,
    StudentDeleteView,
-   StudentUpdateView
+   StudentUpdateView,
+   AssignmentListView,
+   AssignmentCreateView,
 )
 
 urlpatterns = [
@@ -29,5 +31,8 @@ urlpatterns = [
    path('student/create/', StudentCreateView.as_view(), name='student.create'),
    path('student/<int:pk>/detail/', StudentDetailView.as_view(), name='student.detail'),
    path('student/<int:pk>/edit/', StudentUpdateView.as_view(), name='student.edit'),
-   path('student/<int:pk>/delete/', StudentDeleteView.as_view(), name='student.delete')
+   path('student/<int:pk>/delete/', StudentDeleteView.as_view(), name='student.delete'),
+   # Assignment URLs
+   path('assignment/list/', AssignmentListView.as_view(), name='assignment.index'),
+   path('assignment/create/', AssignmentCreateView.as_view(), name='assignment.create'),
 ]
