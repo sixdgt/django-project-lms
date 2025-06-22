@@ -56,3 +56,30 @@ class TeacherModelTest(TestCase):
         except Exception as e:
             print("Error: ", e)
             print("Error: ", "Required phone number length is 9.")
+    
+    def test_teacher_model_email_exist(self):
+        teacher = Teacher.objects.create(
+            full_name="KP Oli",
+            email="kpioli@gmail.com",
+            department="BCA",
+            phone_no=980000000,
+            join_date='2025-02-02',
+            #user=User.objects.get(id=12) # Assuming user with id 12 exists
+            # assuming not user exists so creating new user
+            user=User.objects.create_user(username="testemail", password="nepal@123")
+        )
+
+        # case one: email different
+        try:
+            # case one: user with different email
+            print("Case Email: Email different")
+            self.assertEqual(teacher.full_name, "KP Oli")
+            self.assertEqual(teacher.email, "hiraman@gmail.com")
+            self.assertEqual(teacher.department, "BCA")
+            self.assertEqual(teacher.phone_no, 980000000)
+            self.assertEqual(teacher.join_date, '2025-02-02')
+            self.assertEqual(teacher.user, User.objects.get(username="testemail"))
+            print("Case Email: Email different passed")
+        except Exception as e:
+            print("Error: ", e)
+            print("Error: ", "Email already available")

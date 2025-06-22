@@ -1,0 +1,10 @@
+asgiref==3.8.1
+Django==5.2.3
+django-bootstrap5==25.1
+django-jazzmin==3.0.1
+djangorestframework==3.16.0
+gunicorn==23.0.0
+mysqlclient==2.2.7
+packaging==25.0
+sqlparse==0.5.3
+tzdata==2025.2
